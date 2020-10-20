@@ -1,8 +1,6 @@
-# Jupyter Deployment
+# Artificien: Jupyter
 
 This repository contains code relating to deploying a multi-user juypter notebook service that integrates with the Artificien platform.
-
-## Requirements
 
 Core Needs
 - More than one user has to be able to use
@@ -14,3 +12,23 @@ Core Needs
 
 Stretch
 - Scalable/inexpensive infrastructure to accomodate many users at one
+
+TODO: super short project description, some sample screenshots or mockups that you keep up-to-date.
+
+## Architecture
+
+TODO:  overall descriptions of code organization and tools and libraries used
+
+## Setup
+
+TODO: how to get the project dev environment up and running, npm install etc, all necessary commands needed, environment variables etc
+
+## Deployment
+
+TODO: how to deploy the project
+
+## Authors
+
+* Jake Epstein '21
+
+## Acknowledgments
