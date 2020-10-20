@@ -1,6 +1,6 @@
 # Artificien: Jupyter
 
-This repository contains code relating to deploying a multi-user juypter notebook service that integrates with the Artificien platform.
+This repository contains code relating to deploying a multi-user juypter notebook service that integrates with the Artificien platform. This serves to spawn single-user jupyter servers to allow clients to work with sample data and build their models on the Artificien Marketplace web application.
 
 Core Needs
 - More than one user has to be able to use
