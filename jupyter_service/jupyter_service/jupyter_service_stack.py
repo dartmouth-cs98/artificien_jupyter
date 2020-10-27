@@ -45,19 +45,23 @@ class JupyterServiceStack(core.Stack):
             core.Tag.add(jupyter_instance, "Name", "Little Jupyter Service")
 
             jupyter_userdata.add_commands(
-                    #update packages
-                    #"apt update -y",
-#                   #"apt install -y software-properties-common",
-#                   #"add-apt-repository -y ppa:deadsnakes/ppa",
-                    #"apt upgrade -y",
                     # install littlest jupyter hub
                     "curl -L https://tljh.jupyter.org/bootstrap.py | python3 - --admin artificien",
+                    #configure https to jupyter.artificien.com
+                    "tljh-config set https.enabled true"
+                    "tljh-config set https.letsencrypt.email epsteinj.us@gmail.com"
+                    "tljh-config add-item https.letsencrypt.domains jupyter.artificien.com"
+                    "tljh-config add-item https.letsencrypt.domains www.jupyter.artificien.com"
+                    "tljh-config reload proxy"
+                    #configure with preinstalled packages
                     "source /opt/tljh/user/bin/activate"
                     "export PATH=/opt/tljh/user/bin:${PATH}"
-                    "conda install python=3.7"
-                    "conda install numpy"
-                    "conda install pandas"
-                    "pip install 'syft[udacity]'"
+                    "chown -R ubuntu /opt/tljh/user"
+                    "chmod -R +x /opt/tljh/user"
+                    "conda install -y python=3.7"
+                    "conda install -y numpy"
+                    "conda install -y pandas"
+                    "yes | pip install syft[udacity]"
             )
             
             jupyter_userdata.add_signal_on_exit_command(resource=jupyter_instance)
