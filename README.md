@@ -1,8 +1,6 @@
-# Jupyter Deployment
+# Artificien: Jupyter
 
-This repository contains code relating to deploying a multi-user juypter notebook service that integrates with the Artificien platform.
-
-## Requirements
+This repository contains code relating to deploying a multi-user juypter notebook service that integrates with the Artificien platform. This serves to spawn single-user jupyter servers to allow clients to work with sample data and build their models on the Artificien Marketplace web application.
 
 Core Needs
 - More than one user has to be able to use
@@ -33,4 +31,10 @@ To deprovision cloud resources: `cdk destroy`
 
 When run, the script will deploy a multiuser jupyterhub at a public IP, accessable via HTTP (one issue for sprint 2 is HTTPS). It is automatically configured with an admin account `artificien` with password `artificien`. Admins can add other users via CLI or GUI. Another issue for sprint 2 is integrating access with Oauth (AWS cognito).
 
-When deployed, cloud resource is accessable at: http://ec2-54-145-15-160.compute-1.amazonaws.com/hub/login  
+When deployed, cloud resource is accessable at: http://ec2-54-145-15-160.compute-1.amazonaws.com/hub/login
+
+### Authors
+
+* Jake Epstein '21
+## Acknowledgment
+
