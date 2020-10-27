@@ -30,6 +30,8 @@ class JupyterServiceStack(core.Stack):
         
         if jupyter_ec2:
             #create instance
+            #create userdata
+            jupyter_userdata = ec2.UserData.for_linux(shebang="#!/bin/bash -xe")
             jupyter_instance = ec2.Instance(
                     self,
                     "jupyter_client",
@@ -37,23 +39,30 @@ class JupyterServiceStack(core.Stack):
                     machine_image=ec2.MachineImage.generic_linux({'us-east-1': 'ami-0817d428a6fb68645'}),
                     security_group=jupyter_security_group,
                     vpc=vpc,
-                    key_name="littlest-jupyter"
+                    key_name="littlest-jupyter",
+                    user_data=jupyter_userdata
             )
             core.Tag.add(jupyter_instance, "Name", "Little Jupyter Service")
 
-            jupyter_userdata = ec2.UserData.for_linux(shebang="#!/bin/bash -xe")
             jupyter_userdata.add_commands(
-                    #updata packages
-                    "apt update -y",
-#                    "apt install -y software-properties-common",
-#                    "add-apt-repository -y ppa:deadsnakes/ppa",
-                    "apt upgrade -y",
+                    #update packages
+                    #"apt update -y",
+#                   #"apt install -y software-properties-common",
+#                   #"add-apt-repository -y ppa:deadsnakes/ppa",
+                    #"apt upgrade -y",
                     # install littlest jupyter hub
                     "curl -L https://tljh.jupyter.org/bootstrap.py | python3 - --admin artificien",
+                    "source /opt/tljh/user/bin/activate"
+                    "export PATH=/opt/tljh/user/bin:${PATH}"
+                    "conda install python=3.7"
+                    "conda install numpy"
+                    "conda install pandas"
+                    "pip install 'syft[udacity]'"
             )
+            
             jupyter_userdata.add_signal_on_exit_command(resource=jupyter_instance)
 
-            jupyter_instance.instance.cfn_options.creation_policy = core.CfnCreationPolicy(
-                resource_signal=core.CfnResourceSignal(count=1, timeout="PT10M")
-            )
+           # jupyter_instance.instance.cfn_options.creation_policy = core.CfnCreationPolicy(
+           #     resource_signal=core.CfnResourceSignal(count=1, timeout="PT20M")
+           # )
 

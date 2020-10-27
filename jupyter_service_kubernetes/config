@@ -1,0 +1,29 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJd01UQXlOREl4TURRME1sb1hEVE13TVRBeU1qSXhNRFEwTWxvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBS2VOCjZ4YlpoKzRBeTB3OVR6aHEvNnZqbUpCTGtrY2JRUDJERk42QVB2VFRTSGRLMFFtR1FOcVZNajU4RGVzcjB1K3IKbENuM3ZWQzcxTVFkZk9IRzk5QTV3RGJnYXdOVm5YNHZSazNlY1VqdEpGY2dybkFFL2ZPbythY0x2VHpsbThnUQpnak5CUUVYVFpieGgvVU43blNncjRPdzBxZXU5YXdKek9FRC9zcHlqR213OGFlcWgxZ0NoOWhKdVY1ZXY2VFBpCkxLQmJqQkFqdHd3QmpTVXlSdmxhcm1MWUpab1I2bDFwcnN3WGF1dGlDNGVDK3o5UStYUUdJd2N6U3g5TTF1RzIKQzJCTm02ckI2cWxRLzdkN2xJNnFHKzBldWI0b3BsbFVhanRLRy9wdmVCeVBDb3k5VC9rUmRhTURQZ3JxelNaagppZ2hWbUxRT3ZYMUZwNVluK3ljQ0F3RUFBYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFCd0lBcFU4VWlCM3RsTkFlV1dHZTUyeURZYkQKc08xWDNzbm5Hd1Y1T0k0NVFFK0hDRklqZU1iRWQ3cUp6YkF4MjFlRE0rM1ZZNVlhWmwwQ2FUTVZvZTNtdnBsbQp2MUNSMzViRDVrdzU5VytwamV2OXd1OG1RVFFGdDZBd3E2dDdwVGYyUjFYbGEwL1U3ZE1xNjdjMTcxQVVYVWxOCm93SmN0dURPN3RjMlhZbG1yLzhSUHFzRjZLZnZ6RTRlNXl4Sk8vMkJqUUd2b3hlVUtyL1BKSzVBbW8yb1JHQjAKMGRYampkbHVkZXgwZUdGY3U4MmxyRnFBWHlHZ1NFMHp5djVkU211TmJldnQ0RitDOWV1YUJDaFA5SFJZbjBsYQpXdkR5S0JjWS95aUVnb1o4bFdLQmV5aURKemxqU05SU1cwOFBSY09Dbkt0VzVJUWorSWVyZXFTM2c1az0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://E06269F28F21CF72A534C93DA0F9B729.yl4.us-east-1.eks.amazonaws.com
+  name: arn:aws:eks:us-east-1:798822927254:cluster/jupyter-service-cluster
+contexts:
+- context:
+    cluster: arn:aws:eks:us-east-1:798822927254:cluster/jupyter-service-cluster
+    user: arn:aws:eks:us-east-1:798822927254:cluster/jupyter-service-cluster
+  name: arn:aws:eks:us-east-1:798822927254:cluster/jupyter-service-cluster
+current-context: arn:aws:eks:us-east-1:798822927254:cluster/jupyter-service-cluster
+kind: Config
+preferences: {}
+users:
+- name: arn:aws:eks:us-east-1:798822927254:cluster/jupyter-service-cluster
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - --region
+      - us-east-1
+      - eks
+      - get-token
+      - --cluster-name
+      - jupyter-service-cluster
+      - --role
+      - arn:aws:iam::798822927254:role/jupyter-eks
+      command: aws
