@@ -1,0 +1,54 @@
+Resources:
+        Ec2Instance:
+                Type: AWS::EC2::Instance
+                Properties:
+                        InstanceType: t2.micro
+                        ImageId: ami-03657b56516ab7912 # AWS Linux AMI
+                        UserData:
+                                'Fn::Base64':
+                                        !Sub |
+                                        #!/bin/bash
+                                        yum -y update
+					# Install pip
+					yum install pip
+                                        # Install kops
+					curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos#/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+					chmod +x ./kops
+					sudo mv ./kops /usr/local/bin/
+					#Install kubectl
+					curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+					chmod +x ./kubectl
+					sudo mv ./kubectl /usr/local/bin/kubectl
+					#Install awscli
+					pip install awscli
+				        #choose cluster name
+                                        export NAME=jupyter-service.k8s.local
+                                        #set up ssh keypair
+                                        ssh-keygen
+                                        #Create an S3 to store cluster configuration
+                                        #aws s3api create-bucket --jupyter-kubernetes
+                                        export KOPS_STATE_STORE=s3://jupyter-kubernetes
+                                        #versioning bucket
+                                        aws s3api put-bucket-versioning --bucket jupyter-kubernetes --versioning-configuration Status=Enabled
+                                        #set deployment region
+                                        export REGION='curl -s http://168.254.168.254/latest/dynamic/instance-identity/document|grep region|awk -F\" '{print $4}'`
+                                        #create cluster
+                                        kops create cluster $NAME \
+                                        --zones "us-east-2a" \
+                                        --authorization RBAC \
+                                        --master-size t2.micro \
+                                        --master-volume-size 10 \
+                                        --node-size t2.medium \
+                                        --node-volume-size 10 \
+                                        --yes
+					#Start Server
+					service httpd start
+					chkconfig httpd on
+			Tags:
+				- Key: Name
+                                - Value: jupyter_service
+
+
+
+
+

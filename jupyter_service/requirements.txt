@@ -1,0 +1,4 @@
+aws-cdk.aws-ec2
+aws-cdk.cdk
+-e .
+pytest
